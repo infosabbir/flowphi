@@ -1,16 +1,18 @@
+import 'package:FlowPhi/features/dashboard/presentation/providers/current_month_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-class DashboardPage extends StatelessWidget {
+class DashboardPage extends ConsumerWidget {
   const DashboardPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     TextTheme styl = Theme.of(context).textTheme;
-    ColorScheme colr = Theme.of(context).colorScheme;
+    // ColorScheme colr = Theme.of(context).colorScheme;
 
-    final now = DateTime.now();
-    final currentMonth = DateFormat.yMMM().format(now);
+    final selectedMonth = ref.watch(selectedMonthProvider);
+    final currentMonth = DateFormat.yMMM().format(selectedMonth);
 
     return Scaffold(
       appBar: AppBar(title: Text('FlowPhi')),
