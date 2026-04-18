@@ -1,0 +1,36 @@
+# Run this command after saving: flutter pub run flutter_launcher_icons
+flutter_launcher_icons:
+  image_path: "assets/icon/icon.png"
+
+  android: "launcher_icon"
+  image_path_android: "assets/icon/icon.png"
+  min_sdk_android: 21 
+  
+  # For Android Adaptive Icons:
+  # Since your icon.png already has a background, we use it as the foreground 
+  # and set a matching background color to ensure a seamless look.
+  adaptive_icon_background: "#004B49" 
+  adaptive_icon_foreground: "assets/icon/icon.png"
+
+  ios: true
+  image_path_ios: "assets/icon/icon.png"
+  remove_alpha_ios: true # Apple requires this for icons with solid backgrounds
+
+  web:
+    generate: true
+    image_path: "assets/icon/icon.png"
+    background_color: "#004B49"
+    theme_color: "#004B49"
+
+  windows:
+    generate: true
+    image_path: "assets/icon/icon.png"
+    icon_size: 48 
+
+  macos:
+    generate: true
+    image_path: "assets/icon/icon.png"
+
+  linux:
+    generate: true
+    image_path: "assets/icon/icon.png"
