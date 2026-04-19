@@ -1,23 +1,41 @@
-import 'package:FlowPhi/features/dashboard/presentation/widgets/auth_header.dart';
-import 'package:FlowPhi/features/dashboard/presentation/widgets/auth_text_field.dart';
-import 'package:FlowPhi/features/dashboard/presentation/widgets/custom_appbar.dart';
+import 'package:FlowPhi/features/auth/presentation/widgets/auth_header.dart';
+import 'package:FlowPhi/features/auth/presentation/widgets/auth_text_field.dart';
+import 'package:FlowPhi/core/custom_appbar.dart';
 import 'package:flutter/material.dart';
 
-class RegisterPage extends StatelessWidget {
-  RegisterPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
+
   final _emailController = TextEditingController();
+
   final _passwordController = TextEditingController();
+
   final _confirmPasswordController = TextEditingController();
+
   final _fullnameController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    _fullnameController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final styl = Theme.of(context).textTheme;
 
     return Scaffold(
-      appBar: CustomAppbar(),
+      appBar: const CustomAppbar(),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(24),
@@ -72,7 +90,7 @@ class RegisterPage extends StatelessWidget {
                           return 'Enter your password';
                         }
                         if (value.length < 6) {
-                          return 'Password must be at least 6 character';
+                          return 'Password must be at least 6 characters';
                         }
                         return null;
                       },

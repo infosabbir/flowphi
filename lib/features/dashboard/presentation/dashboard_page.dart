@@ -1,3 +1,4 @@
+import 'package:FlowPhi/core/custom_appbar.dart';
 import 'package:FlowPhi/features/dashboard/presentation/providers/current_month_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,7 +16,7 @@ class DashboardPage extends ConsumerWidget {
     final currentMonth = DateFormat.yMMM().format(selectedMonth);
 
     return Scaffold(
-      appBar: AppBar(title: Text('FlowPhi')),
+      appBar: const CustomAppbar(),
       body: Padding(
         padding: EdgeInsets.all(16),
         child: Column(
@@ -23,15 +24,15 @@ class DashboardPage extends ConsumerWidget {
           children: [
             Text(currentMonth, style: styl.headlineSmall),
             const SizedBox(height: 20),
-            _SumamryCard(
+            _SummaryCard(
               title: 'Monthly Income',
               amount: 0,
               color: Colors.green,
             ),
             const SizedBox(height: 12),
-            _SumamryCard(title: 'Total Expenses', amount: 0, color: Colors.red),
+            _SummaryCard(title: 'Total Expenses', amount: 0, color: Colors.red),
             const SizedBox(height: 12),
-            _SumamryCard(
+            _SummaryCard(
               title: 'Current Balance',
               amount: 0,
               color: Colors.blue,
@@ -51,12 +52,12 @@ class DashboardPage extends ConsumerWidget {
   }
 }
 
-class _SumamryCard extends StatelessWidget {
+class _SummaryCard extends StatelessWidget {
   final String title;
   final double amount;
   final Color color;
 
-  const _SumamryCard({
+  const _SummaryCard({
     required this.title,
     required this.amount,
     required this.color,

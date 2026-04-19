@@ -1,26 +1,39 @@
 import 'package:FlowPhi/features/auth/presentation/register_page.dart';
-import 'package:FlowPhi/features/dashboard/presentation/widgets/auth_header.dart';
-import 'package:FlowPhi/features/dashboard/presentation/widgets/auth_text_field.dart';
-import 'package:FlowPhi/features/dashboard/presentation/widgets/custom_appbar.dart';
+import 'package:FlowPhi/features/auth/presentation/widgets/auth_header.dart';
+import 'package:FlowPhi/features/auth/presentation/widgets/auth_text_field.dart';
+import 'package:FlowPhi/core/custom_appbar.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
+
   final _emailController = TextEditingController();
+
   final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final styl = Theme.of(context).textTheme;
 
     return Scaffold(
-      appBar: CustomAppbar(),
+      appBar: const CustomAppbar(),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(24),
+          padding:const EdgeInsets.all(24),
           child: Center(
             child: SingleChildScrollView(
               child: Form(
@@ -65,28 +78,13 @@ class LoginPage extends StatelessWidget {
                         return null;
                       },
                     ),
-                    const SizedBox(height: 16),
-                    AuthTextField(
-                      label: 'Confirm Password',
-                      icon: Icons.lock_reset_outlined,
-                      isPassword: true,
-                      controller: _confirmPasswordController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Enter your password';
-                        }
-                        if (value != _passwordController.text) {
-                          return 'Password does not match';
-                        }
-                        return null;
-                      },
-                    ),
+
                     const SizedBox(height: 24),
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-                          if (!_formKey.currentState!.validate()) {
+                          if (_formKey.currentState!.validate()) {
                             // procced with login
                           }
                         },
@@ -109,7 +107,10 @@ class LoginPage extends StatelessWidget {
                             style: styl.bodyMedium,
                           ),
                           const SizedBox(width: 8),
-                          Text('Register', selectionColor: Colors.green),
+                          Text(
+                            'Register',
+                            style: const TextStyle(color: Colors.green),
+                          ),
                         ],
                       ),
                     ),
