@@ -6,7 +6,11 @@ class AppTheme {
       useMaterial3: true,
       colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
       scaffoldBackgroundColor: const Color(0xFFF7F9FC),
-      appBarTheme: const AppBarTheme(centerTitle: true, elevation: 0),
+      appBarTheme: const AppBarTheme(
+        centerTitle: true,
+        elevation: 0,
+      
+      ),
     );
   }
 }

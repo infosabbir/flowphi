@@ -1,5 +1,5 @@
 import 'package:FlowPhi/core/theme/app_theme.dart';
-import 'package:FlowPhi/features/dashboard/presentation/dashboard_page.dart';
+import 'package:FlowPhi/features/auth/presentation/login_page.dart';
 import 'package:flutter/material.dart';
 
 class FlowPhiApp extends StatelessWidget {
@@ -11,7 +11,7 @@ class FlowPhiApp extends StatelessWidget {
       title: 'FlowPhi',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      home: const DashboardPage(),
+      home: const LoginPage(),
     );
   }
 }
