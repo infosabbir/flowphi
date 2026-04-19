@@ -4,7 +4,13 @@ import 'package:FlowPhi/features/dashboard/presentation/widgets/custom_appbar.da
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatelessWidget {
-  const RegisterPage({super.key});
+  RegisterPage({super.key});
+
+  final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+  final _fullnameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -17,48 +23,96 @@ class RegisterPage extends StatelessWidget {
           padding: EdgeInsets.all(24),
           child: Center(
             child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const AuthHeader(
-                    title: 'Create Account',
-                    subtitle: 'Register and start tracking your money smartly',
-                  ),
-                  const SizedBox(height: 32),
-                  const AuthTextField(
-                    label: 'Full Name',
-                    icon: Icons.person_outline,
-                  ),
-                  const SizedBox(height: 16),
-                  const AuthTextField(
-                    label: 'Email',
-                    icon: Icons.email_outlined,
-                  ),
-                  const SizedBox(height: 16),
-                  const AuthTextField(
-                    label: 'Password',
-                    icon: Icons.lock_outline,
-                    obscureText: true,
-                  ),
-                  const SizedBox(height: 16),
-                  const AuthTextField(
-                    label: 'Confirm Password',
-                    icon: Icons.lock_reset_outlined,
-                  ),
-                  const SizedBox(height: 24),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: const Text('Register'),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    const AuthHeader(
+                      title: 'Create Account',
+                      subtitle:
+                          'Register and start tracking your money smartly',
                     ),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'By continuing, you agree to our terms and privacy policy.',
-                    style: styl.bodySmall,
-                    textAlign: TextAlign.center,
-                  ),
-                ],
+                    const SizedBox(height: 32),
+                    AuthTextField(
+                      label: 'Full Name',
+                      icon: Icons.person_outline,
+                      controller: _fullnameController,
+                      keyboardType: TextInputType.name,
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return 'Enter your full name';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    AuthTextField(
+                      label: 'Email',
+                      icon: Icons.email_outlined,
+                      controller: _emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return 'Enter your email address';
+                        }
+                        if (!value.contains('@')) {
+                          return 'Enter valid email address';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    AuthTextField(
+                      label: 'Password',
+                      icon: Icons.lock_outline,
+                      isPassword: true,
+                      controller: _passwordController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Enter your password';
+                        }
+                        if (value.length < 6) {
+                          return 'Password must be at least 6 character';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    AuthTextField(
+                      label: 'Confirm Password',
+                      icon: Icons.lock_reset_outlined,
+                      isPassword: true,
+                      controller: _confirmPasswordController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Enter your password';
+                        }
+                        if (value != _passwordController.text) {
+                          return 'Password does not match';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 24),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if(_formKey.currentState!.validate()){
+                            // proceed with register
+                          }
+                        },
+                        child: const Text('Register'),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'By continuing, you agree to our terms and privacy policy.',
+                      style: styl.bodySmall,
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

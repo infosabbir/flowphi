@@ -11,7 +11,7 @@ class FlowPhiApp extends StatelessWidget {
       title: 'FlowPhi',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      home: const LoginPage(),
+      home:  LoginPage(),
     );
   }
 }
