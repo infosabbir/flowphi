@@ -1,6 +1,10 @@
+import 'package:FlowPhi/features/auth/data/auth_repository.dart';
+import 'package:FlowPhi/features/auth/presentation/login_page.dart';
 import 'package:FlowPhi/features/auth/presentation/widgets/auth_header.dart';
 import 'package:FlowPhi/features/auth/presentation/widgets/auth_text_field.dart';
 import 'package:FlowPhi/core/custom_appbar.dart';
+import 'package:FlowPhi/features/dashboard/presentation/dashboard_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -32,7 +36,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    final styl = Theme.of(context).textTheme;
+
 
     return Scaffold(
       appBar: const CustomAppbar(),
@@ -115,19 +119,72 @@ class _RegisterPageState extends State<RegisterPage> {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {
-                          if(_formKey.currentState!.validate()){
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
                             // proceed with register
+                            try {
+                              final authRepository = AuthRepository();
+
+                              await authRepository.register(
+                                email: _emailController.text.trim(),
+                                password: _passwordController.text.trim(),
+                              );
+
+                              if (!context.mounted) return;
+
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => const DashboardPage(),
+                                ),
+                              );
+                            } on FirebaseAuthException catch (e) {
+                              String message = 'Register failed';
+
+                              if (e.code == 'email-already-in-use') {
+                                message = 'This email is already in use';
+                              } else if (e.code == 'weak-password') {
+                                message = 'Password is too weak';
+                              } else if (e.code == 'invalide-email') {
+                                message = 'Inavalid email address';
+                              }
+
+                              if (!context.mounted) return;
+
+                              ScaffoldMessenger.of(
+                                context,
+                              ).showSnackBar(SnackBar(content: Text(message)));
+                            } catch (e) {
+                              if (!context.mounted) return;
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(e.toString())),
+                              );
+                            }
                           }
                         },
                         child: const Text('Register'),
                       ),
                     ),
                     const SizedBox(height: 16),
-                    Text(
-                      'By continuing, you agree to our terms and privacy policy.',
-                      style: styl.bodySmall,
-                      textAlign: TextAlign.center,
+                    Row(
+                      children: [
+                        Text('Already have a account?'),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LoginPage(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            'Login',
+                            style: TextStyle(color: Colors.green),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

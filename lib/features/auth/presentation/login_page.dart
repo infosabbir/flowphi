@@ -1,7 +1,10 @@
+import 'package:FlowPhi/features/auth/data/auth_repository.dart';
 import 'package:FlowPhi/features/auth/presentation/register_page.dart';
 import 'package:FlowPhi/features/auth/presentation/widgets/auth_header.dart';
 import 'package:FlowPhi/features/auth/presentation/widgets/auth_text_field.dart';
 import 'package:FlowPhi/core/custom_appbar.dart';
+import 'package:FlowPhi/features/dashboard/presentation/dashboard_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -33,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
       appBar: const CustomAppbar(),
       body: SafeArea(
         child: Padding(
-          padding:const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(24),
           child: Center(
             child: SingleChildScrollView(
               child: Form(
@@ -83,9 +86,50 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             // procced with login
+                            try {
+                              final authRepository = AuthRepository();
+
+                              await authRepository.login(
+                                email: _emailController.text.trim(),
+                                password: _passwordController.text.trim(),
+                              );
+
+                              if (!context.mounted) return;
+
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => const DashboardPage(),
+                                ),
+                              );
+                            } on FirebaseAuthException catch (e) {
+                              String message = 'Login failed';
+
+                              if (e.code == 'user-not-found') {
+                                message = 'No user found for this email';
+                              } else if (e.code == 'wrong-password') {
+                                message = 'Incorrect password';
+                              } else if (e.code == 'invalid-email') {
+                                message = 'Invalid email address';
+                              } else if (e.code == 'invalid-credential') {
+                                message = 'Invalid email or password';
+                              }
+
+                              if (!context.mounted) return;
+
+                              ScaffoldMessenger.of(
+                                context,
+                              ).showSnackBar(SnackBar(content: Text(message)));
+                            } catch (e) {
+                              if (!context.mounted) return;
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(e.toString())),
+                              );
+                            }
                           }
                         },
                         child: const Text('Login'),
