@@ -1,4 +1,5 @@
 import 'package:FlowPhi/features/auth/data/auth_repository.dart';
+import 'package:FlowPhi/features/auth/presentation/forgot_password_page.dart';
 import 'package:FlowPhi/features/auth/presentation/register_page.dart';
 import 'package:FlowPhi/features/auth/presentation/widgets/auth_header.dart';
 import 'package:FlowPhi/features/auth/presentation/widgets/auth_text_field.dart';
@@ -81,6 +82,21 @@ class _LoginPageState extends State<LoginPage> {
                         }
                         return null;
                       },
+                    ),
+
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const ForgotPasswordPage(),
+                            ),
+                          );
+                        },
+                        child: const Text('Forgot password?'),
+                      ),
                     ),
 
                     const SizedBox(height: 24),
