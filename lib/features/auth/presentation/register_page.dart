@@ -99,7 +99,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$',
                         );
                         if (!passwordRegex.hasMatch(value)) {
-                          return 'Password must be at least 8 characters and include uppercase, lowercase, number, and special character';
+                          return 'Use 8+ chars, upper, lower, number, special';
                         }
                         return null;
                       },
@@ -144,16 +144,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                 SnackBar(
                                   content: Text(
                                     'Registration successful. A verification link has been sent to your email',
-                                  ),
-                                ),
-                              );
-
-                              if (!context.mounted) return;
-
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: const Text(
-                                    'Registration Successful',
                                   ),
                                 ),
                               );
