@@ -1,4 +1,6 @@
 import 'package:FlowPhi/core/custom_appbar.dart';
+import 'package:FlowPhi/features/auth/data/auth_repository.dart';
+import 'package:FlowPhi/features/auth/presentation/login_page.dart';
 import 'package:FlowPhi/features/dashboard/presentation/providers/current_month_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,7 +18,26 @@ class DashboardPage extends ConsumerWidget {
     final currentMonth = DateFormat.yMMM().format(selectedMonth);
 
     return Scaffold(
-      appBar: const CustomAppbar(),
+      appBar: CustomAppbar(
+        actions: [
+          IconButton(
+            onPressed: () async {
+              final authRepository = AuthRepository();
+
+              await authRepository.logout();
+
+              if (!context.mounted) return;
+
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (_) => const LoginPage()),
+                (route) => false,
+              );
+            },
+            icon: const Icon(Icons.logout, color: Colors.redAccent),
+          ),
+        ],
+      ),
       body: Padding(
         padding: EdgeInsets.all(16),
         child: Column(

@@ -37,7 +37,6 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
 
-
     return Scaffold(
       appBar: const CustomAppbar(),
       body: SafeArea(
@@ -132,6 +131,12 @@ class _RegisterPageState extends State<RegisterPage> {
 
                               if (!context.mounted) return;
 
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: const Text('Registration Successful')));
+
+                              await Future.delayed(const Duration(milliseconds: 800));
+
+                              if(!context.mounted) return;
+
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
@@ -169,13 +174,13 @@ class _RegisterPageState extends State<RegisterPage> {
                     const SizedBox(height: 16),
                     Row(
                       children: [
-                        Text('Already have a account?'),
+                        Text('Already have an account?'),
                         TextButton(
                           onPressed: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => LoginPage(),
+                                builder: (_) => LoginPage(),
                               ),
                             );
                           },

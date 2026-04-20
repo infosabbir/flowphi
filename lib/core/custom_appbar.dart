@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppbar({super.key});
+  const CustomAppbar({super.key, this.actions});
+
+  final List<Widget>? actions;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
           ],
         ),
       ),
+      actions: actions,
     );
   }
 

@@ -99,6 +99,16 @@ class _LoginPageState extends State<LoginPage> {
 
                               if (!context.mounted) return;
 
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: const Text('Login successs')),
+                              );
+
+                              await Future.delayed(
+                                const Duration(microseconds: 800),
+                              );
+
+                              if (!context.mounted) return;
+
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
