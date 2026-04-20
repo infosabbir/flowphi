@@ -58,8 +58,12 @@ class _LoginPageState extends State<LoginPage> {
                         if (value == null || value.trim().isEmpty) {
                           return 'Please enter your email';
                         }
-                        if (!value.contains('@')) {
-                          return 'Enter a valid email';
+                        final email = value.trim();
+                        final emailRegex = RegExp(
+                          r'^[\w\.\-]+@([\w\-]+\.)+[a-zA-Z]{2,}$',
+                        );
+                        if (!emailRegex.hasMatch(email)) {
+                          return 'Enter a valid email address';
                         }
                         return null;
                       },
@@ -74,9 +78,6 @@ class _LoginPageState extends State<LoginPage> {
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter your password';
-                        }
-                        if (value.length < 6) {
-                          return 'Password must be at least 6 characters';
                         }
                         return null;
                       },
@@ -97,6 +98,23 @@ class _LoginPageState extends State<LoginPage> {
                                 password: _passwordController.text.trim(),
                               );
 
+                              final user = FirebaseAuth.instance.currentUser;
+
+                              if (user != null && !user.emailVerified) {
+                                await FirebaseAuth.instance.signOut();
+
+                                if (!context.mounted) return;
+
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      'Please verify your email before logging in',
+                                    ),
+                                  ),
+                                );
+                                return;
+                              }
+
                               if (!context.mounted) return;
 
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -104,7 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                               );
 
                               await Future.delayed(
-                                const Duration(microseconds: 800),
+                                const Duration(milliseconds: 800),
                               );
 
                               if (!context.mounted) return;

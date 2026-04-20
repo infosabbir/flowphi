@@ -36,12 +36,11 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: const CustomAppbar(),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(24),
+          padding: const EdgeInsets.all(24),
           child: Center(
             child: SingleChildScrollView(
               child: Form(
@@ -76,8 +75,12 @@ class _RegisterPageState extends State<RegisterPage> {
                         if (value == null || value.trim().isEmpty) {
                           return 'Enter your email address';
                         }
-                        if (!value.contains('@')) {
-                          return 'Enter valid email address';
+                        final email = value.trim();
+                        final emailRegex = RegExp(
+                          r'^[\w\.\-]+@([\w\-]+\.)+[a-zA-Z]{2,}$',
+                        );
+                        if (!emailRegex.hasMatch(email)) {
+                          return 'Enter a valid email address';
                         }
                         return null;
                       },
@@ -92,8 +95,11 @@ class _RegisterPageState extends State<RegisterPage> {
                         if (value == null || value.isEmpty) {
                           return 'Enter your password';
                         }
-                        if (value.length < 6) {
-                          return 'Password must be at least 6 characters';
+                        final passwordRegex = RegExp(
+                          r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$',
+                        );
+                        if (!passwordRegex.hasMatch(value)) {
+                          return 'Password must be at least 8 characters and include uppercase, lowercase, number, and special character';
                         }
                         return null;
                       },
@@ -129,18 +135,39 @@ class _RegisterPageState extends State<RegisterPage> {
                                 password: _passwordController.text.trim(),
                               );
 
+                              final user = FirebaseAuth.instance.currentUser;
+                              await user?.sendEmailVerification();
+
                               if (!context.mounted) return;
 
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: const Text('Registration Successful')));
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Registration successful. A verification link has been sent to your email',
+                                  ),
+                                ),
+                              );
 
-                              await Future.delayed(const Duration(milliseconds: 800));
+                              if (!context.mounted) return;
 
-                              if(!context.mounted) return;
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: const Text(
+                                    'Registration Successful',
+                                  ),
+                                ),
+                              );
+
+                              await Future.delayed(
+                                const Duration(milliseconds: 800),
+                              );
+
+                              if (!context.mounted) return;
 
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (_) => const DashboardPage(),
+                                  builder: (_) => const LoginPage(),
                                 ),
                               );
                             } on FirebaseAuthException catch (e) {
@@ -150,8 +177,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                 message = 'This email is already in use';
                               } else if (e.code == 'weak-password') {
                                 message = 'Password is too weak';
-                              } else if (e.code == 'invalide-email') {
-                                message = 'Inavalid email address';
+                              } else if (e.code == 'invalid-email') {
+                                message = 'Invalid email address';
                               }
 
                               if (!context.mounted) return;
@@ -179,9 +206,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                builder: (_) => LoginPage(),
-                              ),
+                              MaterialPageRoute(builder: (_) => LoginPage()),
                             );
                           },
                           child: Text(
