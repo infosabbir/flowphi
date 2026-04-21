@@ -4,7 +4,6 @@ import 'package:FlowPhi/features/auth/presentation/register_page.dart';
 import 'package:FlowPhi/features/auth/presentation/widgets/auth_header.dart';
 import 'package:FlowPhi/features/auth/presentation/widgets/auth_text_field.dart';
 import 'package:FlowPhi/core/custom_appbar.dart';
-import 'package:FlowPhi/features/dashboard/presentation/dashboard_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -134,19 +133,8 @@ class _LoginPageState extends State<LoginPage> {
                               if (!context.mounted) return;
 
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: const Text('Login successs')),
-                              );
-
-                              await Future.delayed(
-                                const Duration(milliseconds: 800),
-                              );
-
-                              if (!context.mounted) return;
-
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => const DashboardPage(),
+                                SnackBar(
+                                  content: const Text('Login successful'),
                                 ),
                               );
                             } on FirebaseAuthException catch (e) {

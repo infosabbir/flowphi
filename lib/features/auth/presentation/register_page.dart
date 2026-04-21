@@ -137,6 +137,8 @@ class _RegisterPageState extends State<RegisterPage> {
                               final user = FirebaseAuth.instance.currentUser;
                               await user?.sendEmailVerification();
 
+                              await FirebaseAuth.instance.signOut();
+
                               if (!context.mounted) return;
 
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -190,7 +192,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     const SizedBox(height: 16),
                     Row(
                       children: [
-                        Text('Already have an account?'),
+                        const Text('Already have an account?'),
                         TextButton(
                           onPressed: () {
                             Navigator.push(
@@ -200,7 +202,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           },
                           child: Text(
                             'Login',
-                            style: TextStyle(color: Colors.green),
+                            style: const TextStyle(color: Colors.green),
                           ),
                         ),
                       ],
