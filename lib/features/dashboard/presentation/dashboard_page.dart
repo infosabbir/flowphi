@@ -25,21 +25,13 @@ class DashboardPage extends ConsumerWidget {
               final authRepository = AuthRepository();
 
               await authRepository.logout();
-
-              if (!context.mounted) return;
-
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (_) => const LoginPage()),
-                (route) => false,
-              );
             },
             icon: const Icon(Icons.logout, color: Colors.redAccent),
           ),
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

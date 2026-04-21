@@ -3,7 +3,6 @@ import 'package:FlowPhi/features/auth/presentation/login_page.dart';
 import 'package:FlowPhi/features/auth/presentation/widgets/auth_header.dart';
 import 'package:FlowPhi/features/auth/presentation/widgets/auth_text_field.dart';
 import 'package:FlowPhi/core/custom_appbar.dart';
-import 'package:FlowPhi/features/dashboard/presentation/dashboard_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
