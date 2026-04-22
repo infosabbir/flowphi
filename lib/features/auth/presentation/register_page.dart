@@ -1,8 +1,8 @@
-import 'package:FlowPhi/features/auth/data/auth_repository.dart';
-import 'package:FlowPhi/features/auth/presentation/login_page.dart';
-import 'package:FlowPhi/features/auth/presentation/widgets/auth_header.dart';
-import 'package:FlowPhi/features/auth/presentation/widgets/auth_text_field.dart';
-import 'package:FlowPhi/core/custom_appbar.dart';
+import 'package:flow_phi/features/auth/data/auth_repository.dart';
+import 'package:flow_phi/features/auth/presentation/login_page.dart';
+import 'package:flow_phi/features/auth/presentation/widgets/auth_header.dart';
+import 'package:flow_phi/features/auth/presentation/widgets/auth_text_field.dart';
+import 'package:flow_phi/core/custom_appbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

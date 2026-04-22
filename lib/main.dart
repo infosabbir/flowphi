@@ -1,5 +1,6 @@
-import 'package:FlowPhi/app/app.dart';
-import 'package:FlowPhi/firebase_options.dart';
+import 'package:flow_phi/app/app.dart';
+import 'package:flow_phi/firebase_options.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,5 +10,11 @@ void main() async {
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  runApp(const ProviderScope(child:  FlowPhiApp()));
+  runApp(
+    DevicePreview(
+      builder: (context) {
+        return ProviderScope(child: FlowPhiApp());
+      },
+    ),
+  );
 }

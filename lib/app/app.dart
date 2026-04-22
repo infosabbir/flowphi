@@ -1,5 +1,5 @@
-import 'package:FlowPhi/core/theme/app_theme.dart';
-import 'package:FlowPhi/features/auth/presentation/auth_gate.dart';
+import 'package:flow_phi/core/theme/app_theme.dart';
+import 'package:flow_phi/features/auth/presentation/auth_gate.dart';
 import 'package:flutter/material.dart';
 
 class FlowPhiApp extends StatelessWidget {

@@ -1,6 +1,6 @@
-import 'package:FlowPhi/features/auth/presentation/login_page.dart';
-import 'package:FlowPhi/features/dashboard/presentation/dashboard_page.dart';
-import 'package:FlowPhi/features/auth/presentation/provider/auth_provider.dart';
+import 'package:flow_phi/features/auth/presentation/login_page.dart';
+import 'package:flow_phi/features/dashboard/presentation/dashboard_page.dart';
+import 'package:flow_phi/features/auth/presentation/provider/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

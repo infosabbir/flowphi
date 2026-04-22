@@ -30,10 +30,7 @@ class DefaultFirebaseOptions {
           'you can reconfigure this by running the FlutterFire CLI again.',
         );
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -70,6 +67,18 @@ class DefaultFirebaseOptions {
     messagingSenderId: '355256939933',
     projectId: 'flowpi-app',
     storageBucket: 'flowpi-app.firebasestorage.app',
+    iosClientId: '355256939933-3vbcm0brp3pq1s7hnef8uolmigh2med7.apps.googleusercontent.com',
     iosBundleId: 'com.example.flowphi',
   );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyCUPdnGqBbaHubQaxmZu7lfdmEjff_FvvY',
+    appId: '1:355256939933:web:7d74cc244e7d8fd30deb74',
+    messagingSenderId: '355256939933',
+    projectId: 'flowpi-app',
+    authDomain: 'flowpi-app.firebaseapp.com',
+    storageBucket: 'flowpi-app.firebasestorage.app',
+    measurementId: 'G-02K28C22JV',
+  );
+
 }

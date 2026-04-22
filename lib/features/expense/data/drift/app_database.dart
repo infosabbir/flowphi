@@ -1,10 +1,12 @@
-import 'package:FlowPhi/features/expense/data/drift/tables/expenses.dart';
+import 'package:flow_phi/features/expense/data/drift/tables/expenses.dart';
+import 'package:flow_phi/features/expense/data/drift/tables/income.dart';
+import 'package:flow_phi/features/expense/data/drift/tables/loans.dart';
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 
 part 'app_database.g.dart';
 
-@DriftDatabase(tables: [Expenses])
+@DriftDatabase(tables: [Expenses, Income, Loans])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(driftDatabase(name: 'flowphi_db'));
 

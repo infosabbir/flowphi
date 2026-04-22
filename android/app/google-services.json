@@ -12,7 +12,12 @@
           "package_name": "com.example.flowphi"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "355256939933-mlhaoles3vrmr2ae8iac9ik3nfl8vbl8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyC2QuwihXdhMzMB_UjByHYvFqD9olBr_Oo"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "355256939933-mlhaoles3vrmr2ae8iac9ik3nfl8vbl8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "355256939933-3vbcm0brp3pq1s7hnef8uolmigh2med7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flowphi"
+              }
+            }
+          ]
         }
       }
     }
