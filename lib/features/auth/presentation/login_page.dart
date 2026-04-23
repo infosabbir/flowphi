@@ -79,6 +79,12 @@ class _LoginPageState extends State<LoginPage> {
                         if (value == null || value.isEmpty) {
                           return 'Please enter your password';
                         }
+                        final passwordRegex = RegExp(
+                          r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$',
+                        );
+                        if (!passwordRegex.hasMatch(value)) {
+                          return 'Use 8+ chars, upper, lower, number, special';
+                        }
                         return null;
                       },
                     ),
@@ -113,10 +119,10 @@ class _LoginPageState extends State<LoginPage> {
                                 password: _passwordController.text.trim(),
                               );
 
-                              final user = FirebaseAuth.instance.currentUser;
+                              final user = authRepository.currentUser;
 
                               if (user != null && !user.emailVerified) {
-                                await FirebaseAuth.instance.signOut();
+                                await authRepository.signOut();
 
                                 if (!context.mounted) return;
 
