@@ -144,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               );
                             } on FirebaseAuthException catch (e) {
-                              String message = 'Login failed';
+                              String? message;
 
                               if (e.code == 'user-not-found') {
                                 message = 'No user found for this email';
@@ -160,7 +160,7 @@ class _LoginPageState extends State<LoginPage> {
 
                               ScaffoldMessenger.of(
                                 context,
-                              ).showSnackBar(SnackBar(content: Text(message)));
+                              ).showSnackBar(SnackBar(content: Text(message!)));
                             } catch (e) {
                               if (!context.mounted) return;
 
@@ -191,7 +191,10 @@ class _LoginPageState extends State<LoginPage> {
                           const SizedBox(width: 8),
                           Text(
                             'Register',
-                            style: const TextStyle(color: Colors.green),
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ],
                       ),

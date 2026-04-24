@@ -31,7 +31,10 @@ class DashboardPage extends ConsumerWidget {
               final authRepository = AuthRepository();
               await authRepository.logout();
             },
-            icon: const Icon(Icons.logout, color: Colors.redAccent),
+            icon: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: const Icon(Icons.logout, color: Colors.redAccent),
+            ),
           ),
         ],
       ),
@@ -492,7 +495,8 @@ class DashboardPage extends ConsumerWidget {
                         child: _SortMenuLabel(
                           label: 'Amount: Low to High',
                           isSelected:
-                              selectedExpenseSort == ExpenseSortOption.amountLow,
+                              selectedExpenseSort ==
+                              ExpenseSortOption.amountLow,
                         ),
                       ),
                     ],
