@@ -59,7 +59,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       keyboardType: TextInputType.name,
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
-                          return 'Enter your full name';
+                          return 'Please enter your full name';
                         }
                         return null;
                       },
@@ -72,14 +72,14 @@ class _RegisterPageState extends State<RegisterPage> {
                       keyboardType: TextInputType.emailAddress,
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
-                          return 'Enter your email address';
+                          return 'Please enter your email address';
                         }
                         final email = value.trim();
                         final emailRegex = RegExp(
                           r'^[\w\.\-]+@([\w\-]+\.)+[a-zA-Z]{2,}$',
                         );
                         if (!emailRegex.hasMatch(email)) {
-                          return 'Enter a valid email address';
+                          return 'Enter valid email address';
                         }
                         return null;
                       },
@@ -92,13 +92,13 @@ class _RegisterPageState extends State<RegisterPage> {
                       controller: _passwordController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Enter your password';
+                          return 'Plese enter your password';
                         }
                         final passwordRegex = RegExp(
                           r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$',
                         );
                         if (!passwordRegex.hasMatch(value)) {
-                          return 'Use 8+ chars, upper, lower, number, special';
+                          return 'Use 8 plus, upper & lower, number, special character';
                         }
                         return null;
                       },
@@ -111,7 +111,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       controller: _confirmPasswordController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Enter your password';
+                          return 'Plese enter your confirm password';
                         }
                         if (value != _passwordController.text) {
                           return 'Password does not match';
@@ -134,10 +134,10 @@ class _RegisterPageState extends State<RegisterPage> {
                                 password: _passwordController.text.trim(),
                               );
 
-                              final user = FirebaseAuth.instance.currentUser;
+                              final user = authRepository.currentUser;
                               await user?.sendEmailVerification();
 
-                              await FirebaseAuth.instance.signOut();
+                              await authRepository.signOut();
 
                               if (!context.mounted) return;
 
@@ -162,7 +162,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 ),
                               );
                             } on FirebaseAuthException catch (e) {
-                              String message = 'Register failed';
+                              String? message;
 
                               if (e.code == 'email-already-in-use') {
                                 message = 'This email is already in use';
@@ -176,7 +176,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                               ScaffoldMessenger.of(
                                 context,
-                              ).showSnackBar(SnackBar(content: Text(message)));
+                              ).showSnackBar(SnackBar(content: Text(message!)));
                             } catch (e) {
                               if (!context.mounted) return;
 
@@ -202,7 +202,10 @@ class _RegisterPageState extends State<RegisterPage> {
                           },
                           child: Text(
                             'Login',
-                            style: const TextStyle(color: Colors.green),
+                            style: const TextStyle(
+                              color: Colors.green,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ],
